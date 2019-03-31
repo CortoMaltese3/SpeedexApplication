@@ -13,8 +13,7 @@ namespace SpeedexApplication.Models
         public string AreaName { get; set; }
         [Required]
         public int PostCode { get; set; }
-        [Required]
-        [ForeignKey("CityId")]
+        [Required]        
         public virtual City City { get; set; }
 
         public virtual ICollection<Customer> Customers { get; set; }

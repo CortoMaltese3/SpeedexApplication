@@ -22,3 +22,4 @@ namespace SpeedexApplication.Application
             base.OnModelCreating(modelBuilder);
         }
     }
+}
