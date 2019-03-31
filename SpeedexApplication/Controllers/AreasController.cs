@@ -39,15 +39,14 @@ namespace SpeedexApplication.Controllers
         // GET: Areas/Create
         public ActionResult Create()
         {
+            PopulateCitiesList();                       
             return View();
         }
 
         // POST: Areas/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,AreaName,PostCode")] Area area)
+        public ActionResult Create(Area area)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +54,7 @@ namespace SpeedexApplication.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            PopulateCitiesList(area.CityId);
             return View(area);
         }
 
@@ -90,6 +89,8 @@ namespace SpeedexApplication.Controllers
             return View(area);
         }
 
+
+
         // GET: Areas/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -114,6 +115,12 @@ namespace SpeedexApplication.Controllers
             db.Area.Remove(area);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private void PopulateCitiesList(object selectedCity = null)
+        {
+            var citiesQuery = from c in db.City orderby c.Name select c;
+            ViewBag.CityId = new SelectList(citiesQuery, "Id", "Name", selectedCity);
         }
 
         protected override void Dispose(bool disposing)

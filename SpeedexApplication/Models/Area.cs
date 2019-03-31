@@ -10,11 +10,15 @@ namespace SpeedexApplication.Models
     public class Area : Entity
     {
         [Required]
+        [Display(Name = "Area")]
         public string AreaName { get; set; }
         [Required]
+        [Display(Name = "Postal Code")]
+        [Range(10000,99999)]
         public int PostCode { get; set; }
-        [Required]        
+        
         public virtual City City { get; set; }
+        public int CityId { get; set; }
 
         public virtual ICollection<Customer> Customers { get; set; }
 
