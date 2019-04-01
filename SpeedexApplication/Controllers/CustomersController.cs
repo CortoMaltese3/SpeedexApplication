@@ -39,6 +39,7 @@ namespace SpeedexApplication.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
+            PopulateDropDownList();
             return View();
         }
 
@@ -55,7 +56,7 @@ namespace SpeedexApplication.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            PopulateDropDownList(customer.Id);
             return View(customer);
         }
 
@@ -114,6 +115,12 @@ namespace SpeedexApplication.Controllers
             db.Customer.Remove(customer);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private void PopulateDropDownList(object selectedArea = null)
+        {
+            var areasQuery = from a in db.Area orderby a.AreaName select a;
+            ViewBag.AreaId = new SelectList(areasQuery, "Id", "AreaName", selectedArea);
         }
 
         protected override void Dispose(bool disposing)

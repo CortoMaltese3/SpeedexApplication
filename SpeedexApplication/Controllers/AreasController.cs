@@ -70,26 +70,28 @@ namespace SpeedexApplication.Controllers
             {
                 return HttpNotFound();
             }
+            PopulateCitiesList(area.CityId);
             return View(area);
         }
 
         // POST: Areas/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,AreaName,PostCode")] Area area)
+        public ActionResult Edit([Bind(Include = "Id,AreaName,PostCode")] Area area, int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var areaToBeUpdated = db.Area.Find(id);
             if (ModelState.IsValid)
             {
                 db.Entry(area).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(area);
+            return View(areaToBeUpdated);
         }
-
-
 
         // GET: Areas/Delete/5
         public ActionResult Delete(int? id)

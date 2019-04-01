@@ -14,8 +14,9 @@ namespace SpeedexApplication.Models
         public string Country { get; set; }
         public virtual ICollection<Area> Areas { get; set; }
 
-        //public City()
-        //{
-        //    this.Areas = new HashSet<Area>();
-        //}        
-    }}
+        public City()
+        {
+            this.Areas = new HashSet<Area>();
+        }
+    }
+}
