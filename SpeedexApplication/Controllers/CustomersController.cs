@@ -50,6 +50,7 @@ namespace SpeedexApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Email")] Customer customer)
         {
+            
             if (ModelState.IsValid)
             {
                 db.Customer.Add(customer);
@@ -72,6 +73,7 @@ namespace SpeedexApplication.Controllers
             {
                 return HttpNotFound();
             }
+            PopulateDropDownList();
             return View(customer);
         }
 
@@ -80,14 +82,28 @@ namespace SpeedexApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Email")] Customer customer)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Email")] Customer customer, int? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                db.Entry(customer).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var customerToUpdate = db.Customer.Find(id);
+
+            if (TryUpdateModel(customerToUpdate))
+            {
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch(Exception)
+                {
+                    ModelState.AddModelError("", "Unable to update at the moment. Please try again later");
+                }
+               
+            }
+            PopulateDropDownList(customerToUpdate.Areas);
             return View(customer);
         }
 

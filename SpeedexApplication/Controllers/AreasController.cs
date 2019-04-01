@@ -84,12 +84,21 @@ namespace SpeedexApplication.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var areaToBeUpdated = db.Area.Find(id);
-            if (ModelState.IsValid)
+
+            if (TryUpdateModel(areaToBeUpdated))
             {
-                db.Entry(area).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Unable to update at the moment. Please try again later");
+                }
             }
+
+            PopulateCitiesList(areaToBeUpdated.CityId);
             return View(areaToBeUpdated);
         }
 
