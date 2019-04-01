@@ -48,9 +48,17 @@ namespace SpeedexApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Email")] Customer customer)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Email")] Customer customer, string[] selectedAreas)
         {
-            
+            if (selectedAreas != null)
+            {
+                customer.Areas = new List<Area>();
+                foreach(var area in selectedAreas)
+                {
+                    var areaToAdd = db.Area.Find(int.Parse(area));
+                    customer.Areas.Add(areaToAdd);
+                }
+            }
             if (ModelState.IsValid)
             {
                 db.Customer.Add(customer);

@@ -3,6 +3,8 @@ namespace SpeedexApplication.Application
     using SpeedexApplication.Models;
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.ModelConfiguration;
+    using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
 
     public class SpeedexContext : DbContext
@@ -19,7 +21,16 @@ namespace SpeedexApplication.Application
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            //modelBuilder.Entity<Customer>()
+            //    .HasMany(c => c.Areas).WithMany(a => a.Customers)
+            //    .Map(t => t.MapLeftKey("CustomerId")
+            //               .MapRightKey("AreaId")
+            //               .ToTable("CustomerArea")
+            //    );
             base.OnModelCreating(modelBuilder);
         }
+
     }
 }
