@@ -20,10 +20,7 @@ namespace SpeedexApplication.Controllers
 
         //private void PopulateMainMenuGrid()
         //{
-        //    var mainMenuGrid = (from c in db.Customer join ca in db.cust
-        //                       join CustomerArea ca on c.Id = ca.CustomerId
-        //                 inner
-        //                       join Area a on a.Id = ca.AreaId
+        //    var mainMenuGrid = (from c in db.Customer 
 
 
         //}

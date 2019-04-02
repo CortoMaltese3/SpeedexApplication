@@ -13,8 +13,7 @@ namespace SpeedexApplication.Application
             : base("name=ConnectionString")
         {
             //Database.SetInitializer<SpeedexContext>(new DropCreateDatabaseIfModelChanges<SpeedexContext>());
-            Database.SetInitializer<SpeedexContext>(new DataInitializer());
-            
+            Database.SetInitializer<SpeedexContext>(new DataInitializer());            
         }
 
         public DbSet<City> City { get; set; }
