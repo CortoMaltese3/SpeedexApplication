@@ -22,9 +22,9 @@ namespace SpeedexApplication.Models
 
         public virtual ICollection<Customer> Customers { get; set; }
 
-        public Area()
-        {
-            this.Customers = new HashSet<Customer>();
-        }        
+        //public Area()
+        //{
+        //    this.Customers = new HashSet<Customer>();
+        //}
     }
 }

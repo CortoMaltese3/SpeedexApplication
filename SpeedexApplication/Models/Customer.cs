@@ -16,7 +16,9 @@ namespace SpeedexApplication.Models
         public string LastName { get; set; }
         [Required]
         public string Email { get; set; }        
-        public ICollection<Area> Areas { get; set; }    
+        
+        public virtual Area Area { get; set; }
+        public int AreaId { get; set; }
         
         [Display(Name = "Full Name")]
         public string FullName
@@ -25,11 +27,6 @@ namespace SpeedexApplication.Models
             {
                 return LastName + " " + FirstName;
             }
-        }
-
-        public Customer()
-        {
-            this.Areas = new HashSet<Area>();            
         }
     }
 }

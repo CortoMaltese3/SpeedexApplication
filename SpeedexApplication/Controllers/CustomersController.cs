@@ -39,33 +39,22 @@ namespace SpeedexApplication.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            PopulateDropDownList();
+            PopulateAreasDropDownList();
             return View();
         }
 
         // POST: Customers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Email")] Customer customer, string[] selectedAreas)
+        public ActionResult Create(Customer customer)
         {
-            if (selectedAreas != null)
-            {
-                customer.Areas = new List<Area>();
-                foreach(var area in selectedAreas)
-                {
-                    var areaToAdd = db.Area.Find(int.Parse(area));
-                    customer.Areas.Add(areaToAdd);
-                }
-            }
             if (ModelState.IsValid)
             {
                 db.Customer.Add(customer);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            PopulateDropDownList(customer.Id);
+            PopulateAreasDropDownList();
             return View(customer);
         }
 
@@ -81,7 +70,7 @@ namespace SpeedexApplication.Controllers
             {
                 return HttpNotFound();
             }
-            PopulateDropDownList();
+            PopulateAreasDropDownList();
             return View(customer);
         }
 
@@ -111,7 +100,7 @@ namespace SpeedexApplication.Controllers
                 }
                
             }
-            PopulateDropDownList(customerToUpdate.Areas);
+            PopulateAreasDropDownList();
             return View(customer);
         }
 
@@ -141,10 +130,10 @@ namespace SpeedexApplication.Controllers
             return RedirectToAction("Index");
         }
 
-        private void PopulateDropDownList(object selectedArea = null)
+        private void PopulateAreasDropDownList(object selectedArea = null)
         {
-            var areasQuery = from a in db.Area orderby a.AreaName select a;
-            ViewBag.AreaId = new SelectList(areasQuery, "Id", "AreaName", selectedArea);
+            var GetAreasQuery = from a in db.Area orderby a.AreaName select a;
+            ViewBag.AreaId = new SelectList(GetAreasQuery, "Id", "AreaName", selectedArea);
         }
 
         protected override void Dispose(bool disposing)

@@ -39,7 +39,7 @@ namespace SpeedexApplication.Controllers
         // GET: Areas/Create
         public ActionResult Create()
         {
-            PopulateCitiesList();                       
+            PopulateCitiesDropDownList();                       
             return View();
         }
 
@@ -54,7 +54,7 @@ namespace SpeedexApplication.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            PopulateCitiesList(area.CityId);
+            PopulateCitiesDropDownList();
             return View(area);
         }
 
@@ -70,7 +70,7 @@ namespace SpeedexApplication.Controllers
             {
                 return HttpNotFound();
             }
-            PopulateCitiesList(area.CityId);
+            PopulateCitiesDropDownList(area.CityId);
             return View(area);
         }
 
@@ -98,7 +98,7 @@ namespace SpeedexApplication.Controllers
                 }
             }
 
-            PopulateCitiesList(areaToBeUpdated.CityId);
+            PopulateCitiesDropDownList(areaToBeUpdated.CityId);
             return View(areaToBeUpdated);
         }
 
@@ -128,10 +128,10 @@ namespace SpeedexApplication.Controllers
             return RedirectToAction("Index");
         }
 
-        private void PopulateCitiesList(object selectedCity = null)
+        private void PopulateCitiesDropDownList(object selectedCity = null)
         {
-            var citiesQuery = from c in db.City orderby c.Name select c;
-            ViewBag.CityId = new SelectList(citiesQuery, "Id", "Name", selectedCity);
+            var GetCitiesQuery = from c in db.City orderby c.Name select c;
+            ViewBag.CityId = new SelectList(GetCitiesQuery, "Id", "Name", selectedCity);
         }
 
         protected override void Dispose(bool disposing)
