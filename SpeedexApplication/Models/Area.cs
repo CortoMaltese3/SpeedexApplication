@@ -11,8 +11,10 @@ namespace SpeedexApplication.Models
     {
         [Required]
         [Display(Name = "Area")]
+        [MaxLength(100)]
         public string AreaName { get; set; }
-        [Required]
+
+        [Required]        
         [Display(Name = "Postal Code")]
         [Range(10000,99999)]
         public int PostCode { get; set; }
@@ -21,10 +23,5 @@ namespace SpeedexApplication.Models
         public int CityId { get; set; }
 
         public virtual ICollection<Customer> Customers { get; set; }
-
-        //public Area()
-        //{
-        //    this.Customers = new HashSet<Customer>();
-        //}
     }
 }

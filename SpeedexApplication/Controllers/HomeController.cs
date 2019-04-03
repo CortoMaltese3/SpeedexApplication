@@ -62,6 +62,9 @@ namespace SpeedexApplication.Controllers
                             join ci in db.City on a.CityId equals ci.Id
                             select new MainMenuGrid
                             {
+                                Id = c.Id,
+                                CityId = ci.Id,
+                                AreaId = a.Id,
                                 FirstName = c.FirstName,
                                 LastName = c.LastName,
                                 Email = c.Email,

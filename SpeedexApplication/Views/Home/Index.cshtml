@@ -15,7 +15,7 @@
     <table class="table">
         <tr>
             <th>
-                @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParm })                
+                @Html.ActionLink("First Name", "Index", new { sortOrder = ViewBag.FirstNameSortParm })
             </th>
             <th>
                 @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.LastNameSortParm })
@@ -35,34 +35,48 @@
             <th>
                 @Html.ActionLink("Country", "Index", new { sortOrder = ViewBag.CountrySortParm })
             </th>
+            <th>
 
+            </th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Area)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PostalCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Country)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostalCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "Customers", new {id = item.Id } )">
+                    <img src="~/Content/Images/customer.png" style="width:20px; height:20px" />
+                </a>
+                <a href="@Url.Action("Edit", "Areas", new {id = item.AreaId } )">
+                    <img src="~/Content/Images/area.png" style="width:16px; height:16px" />
+                </a>
+                <a href="@Url.Action("Edit", "Cities", new {id = item.CityId } )">
+                    <img src="~/Content/Images/city.png" style="width:24px; height:24px" />
+                </a>
+            </td>
+        </tr>
+
         }
     </table>
 

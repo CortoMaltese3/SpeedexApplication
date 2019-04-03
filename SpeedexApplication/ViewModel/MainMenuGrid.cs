@@ -26,23 +26,8 @@ namespace SpeedexApplication.ViewModel
 
         public string Country { get; set; }
 
+        public int CityId { get; set; }
 
-
-        //public MainMenuGrid(Customer customer, Area area, City city)
-        //{
-        //    FirstName = customer.FirstName;
-        //    LastName = customer.LastName;
-        //    Email = customer.Email;
-        //    Area = area.AreaName;
-        //    PostalCode = area.PostCode;
-        //    City = city.Name;
-        //    Country = city.Country;
-
-        //}
-
-        //public IEnumerable<Customer> Customers { get; set; }
-        //public IEnumerable<Area> Areas { get; set; }
-        //public IEnumerable<City> Cities { get; set; }
-
+        public int AreaId { get; set; }
     }
 }
