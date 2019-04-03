@@ -11,8 +11,7 @@ namespace SpeedexApplication.Application
     {
         public SpeedexContext()
             : base("name=ConnectionString")
-        {
-            //Database.SetInitializer<SpeedexContext>(new DropCreateDatabaseIfModelChanges<SpeedexContext>());
+        {            
             Database.SetInitializer<SpeedexContext>(new DataInitializer());            
         }
 

@@ -9,7 +9,17 @@
 </head>
 <body>
     <div class="jumbotron">
-        <h3>MAIN MENU</h3>
+        <h2>MAIN MENU</h2>
+        <hr />
+        @using (Html.BeginForm())
+        {
+            <p style="font-size:medium">
+                Search for Customer, Area, City, Country: @Html.TextBox("SearchString")
+                <input type="submit" value="Search"/>
+                <input type="reset" value="reset" />
+            </p>
+        }
+
     </div>
 
     <table class="table">

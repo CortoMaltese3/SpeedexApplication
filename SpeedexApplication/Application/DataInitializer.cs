@@ -16,14 +16,15 @@ namespace SpeedexApplication.Application
             {
                 new City() { Id = 1, Name = "Athens", Country = "Greece"},
                 new City() { Id = 2, Name = "Piraeus", Country = "Greece"},
-                new City() { Id = 3, Name = "Paris", Country = "France"}
+                new City() { Id = 3, Name = "Paris", Country = "France"},                
             };
 
             IList<Area> defaultAreas = new List<Area>
             {
                 new Area() { Id = 1, AreaName = "Kupseli", PostCode = 11362 , CityId = 1},
                 new Area() { Id = 2, AreaName = "Keratsini", PostCode = 18755, CityId = 2 },
-                new Area() { Id = 3, AreaName = "Vincennes", PostCode = 11362, CityId = 3}
+                new Area() { Id = 3, AreaName = "Vincennes", PostCode = 11362, CityId = 3}                
+
             };
 
             IList<Customer> defaultCustomers = new List<Customer>

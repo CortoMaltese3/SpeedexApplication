@@ -14,7 +14,7 @@ namespace SpeedexApplication.Controllers
     {
         private SpeedexContext db = new SpeedexContext();
 
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
             ViewBag.LastNameSortParm = String.IsNullOrEmpty(sortOrder) ? "lastName_desc" : "";
@@ -24,6 +24,12 @@ namespace SpeedexApplication.Controllers
             ViewBag.CountrySortParm = String.IsNullOrEmpty(sortOrder) ? "country_desc" : "";
 
             var mainMenuGrid = PopulateMainMenuGrid();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                mainMenuGrid = mainMenuGrid.Where(m => m.LastName.Contains(searchString) || m.Area.Contains(searchString)
+                                                   || m.City.Contains(searchString) || m.Country.Contains(searchString));
+            }
 
             switch (sortOrder)
             {
@@ -62,16 +68,16 @@ namespace SpeedexApplication.Controllers
                             join ci in db.City on a.CityId equals ci.Id
                             select new MainMenuGrid
                             {
-                                Id = c.Id,
-                                CityId = ci.Id,
-                                AreaId = a.Id,
+                                Id = c.Id,                                
                                 FirstName = c.FirstName,
                                 LastName = c.LastName,
                                 Email = c.Email,
                                 Area = a.AreaName,
                                 PostalCode = a.PostCode,
                                 City = ci.Name,
-                                Country = ci.Country
+                                Country = ci.Country,
+                                CityId = ci.Id,
+                                AreaId = a.Id
                             });
 
             return mainMenuGrid;
