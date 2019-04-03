@@ -14,56 +14,65 @@ namespace SpeedexApplication.Controllers
     {
         private SpeedexContext db = new SpeedexContext();
 
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.FirstNameSortParm = String.IsNullOrEmpty(sortOrder) ? "firstName_desc" : "";
+            ViewBag.LastNameSortParm = String.IsNullOrEmpty(sortOrder) ? "lastName_desc" : "";
+            ViewBag.EmailSortParm = String.IsNullOrEmpty(sortOrder) ? "email_desc" : "";
+            ViewBag.AreaSortParm = String.IsNullOrEmpty(sortOrder) ? "area_desc" : "";            
+            ViewBag.CitySortParm = String.IsNullOrEmpty(sortOrder) ? "city_desc" : "";
+            ViewBag.CountrySortParm = String.IsNullOrEmpty(sortOrder) ? "country_desc" : "";
 
+            var mainMenuGrid = PopulateMainMenuGrid();
 
-            //var viewModel = new MainMenuGrid();
+            switch (sortOrder)
+            {
+                case "firstName_desc":
+                    mainMenuGrid = mainMenuGrid.OrderByDescending(f => f.FirstName);
+                    break;
+                case "lastName_desc":
+                    mainMenuGrid = mainMenuGrid.OrderByDescending(l => l.LastName);
+                    break;
+                case "email_desc":
+                    mainMenuGrid = mainMenuGrid.OrderByDescending(e => e.Email);
+                    break;
+                case "area_desc":
+                    mainMenuGrid = mainMenuGrid.OrderByDescending(a => a.Area);
+                    break;
+                case "city_desc":
+                    mainMenuGrid = mainMenuGrid.OrderByDescending(c => c.City);
+                    break;
+                case "country_desc":
+                    mainMenuGrid = mainMenuGrid.OrderByDescending(c => c.Country);
+                    break;
+                default:
+                    mainMenuGrid = mainMenuGrid.OrderBy(l => l.LastName);
+                    break;
+            }
 
+            return View(mainMenuGrid.ToList());
+        }
+
+        private IEnumerable<MainMenuGrid> PopulateMainMenuGrid()
+        {
             IEnumerable<MainMenuGrid> mainMenuGrid = null;
 
             mainMenuGrid = (from c in db.Customer
-                                join a in db.Area on c.AreaId equals a.Id
-                                join ci in db.City on a.CityId equals ci.Id
-                                select new MainMenuGrid
-                                {
-                                    FirstName = c.FirstName,                                    
-                                    LastName = c.LastName,
-                                    Email = c.Email,
-                                    Area = a.AreaName,
-                                    PostalCode = a.PostCode,
-                                    City = ci.Name,
-                                    Country = ci.Country
-                                });
-            //foreach (var item in mainMenuGrid)
-            //{
-            //    item.FirstName = viewModel.FirstName;
-
-            //}
-
-
-            //foreach (var item in mainMenuGrid)
-            //{
-            //    item = viewModel;
-            //}
-
-            //var mainMenu = PopulateMainMenuGrid();
-            //PopulateMainMenuGrid();
-            return View(mainMenuGrid);
-        }
-
-        private IEnumerable<Customer> PopulateMainMenuGrid()
-        {
-            string sqlString = "select c.FirstName as [First Name], c.LastName as [Last Name], c.Email," +
-                               " a.AreaName as [Area], a.PostCode as [Postal Code], ci.[Name] as City, " +
-                               "ci.Country from Customer c left join Area a on c.AreaId = a.Id " +
-                               "left join City ci on ci.Id = a.CityId";
-            var mainMenuGrid = db.Customer.SqlQuery(sqlString).ToList();
-            //var mainMenuGrid = db.Database.SqlQuery<MainMenuGrid>(sqlString);
-
-
+                            join a in db.Area on c.AreaId equals a.Id
+                            join ci in db.City on a.CityId equals ci.Id
+                            select new MainMenuGrid
+                            {
+                                FirstName = c.FirstName,
+                                LastName = c.LastName,
+                                Email = c.Email,
+                                Area = a.AreaName,
+                                PostalCode = a.PostCode,
+                                City = ci.Name,
+                                Country = ci.Country
+                            });
 
             return mainMenuGrid;
         }
+
     }
 }
